@@ -1,14 +1,13 @@
 {
-  "name": "create-ts-starter",
-  "version": "2.1.0",
-  "description": "Typescript Opinionated Starter / Boilerplate",
+  "name": "ldap-query-generator",
+  "version": "0.0.1",
+  "description": "LDAP schema-aware query generator",
   "repository": {
     "type": "git",
-    "url": "https://github.com/saostad/node-typescript-starter.git"
+    "url": "https://github.com/saostad/ldap-query-generator"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": "bin/setup",
   "scripts": {
     "format": "prettier --check \"src/**/*.ts\" --write",
     "lint": "eslint --ext \".ts,.js\" src --quiet",
@@ -23,10 +22,12 @@
     "start": "npm-run-all -p dev tsc:watch"
   },
   "keywords": [
-    "node",
+    "ldap",
     "typescript",
-    "boilerplate",
-    "starter"
+    "query",
+    "generator",
+    "schema",
+    "aware"
   ],
   "author": "Saeid Ostad",
   "license": "MIT",
