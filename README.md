@@ -6,7 +6,10 @@ this is a tool to generate LDAP operations defined in [RFC 4511](https://tools.i
 ## AS Easy AS
 
 ```ts
+import { Generator } from "ldap-query-generator";
+
 const generator = new Generator<User>();
+
 generator
   .where({ field: "mobile", criteria: "404*" })
   .whereAnd({ field: "memberOf", criteria: "admin*" })
