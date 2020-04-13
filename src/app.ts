@@ -12,16 +12,15 @@ export async function main() {
 
   const generator = new Generator<User>();
   generator
+    .select(["otherMobile", "ou", "pager"])
     .where({ field: "mobile", criteria: "404*" })
     .whereAnd({ field: "memberOf", criteria: "admin*" })
-    .orderBy({ field: "msDS-NcType", order: "asc" })
+    .whereOr({ field: "homePostalAddress", criteria: "*Georgia" })
     .whereNot({ field: "middleName", criteria: "joe" })
-    .whereAnd({ field: "msCOM-UserLink", criteria: "" })
+    .orderBy({ field: "msDS-NcType", order: "asc" })
     .toString();
-
-  console.log(`File: app.ts,`, `Line: 21 => `);
 }
 
 main().catch((err: Error) => {
-  writeLog(err, { level: "error" });
+  writeLog(err, { level: "error", stdout: true });
 });

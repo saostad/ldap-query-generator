@@ -11,11 +11,12 @@ import { Generator } from "ldap-query-generator";
 const generator = new Generator<User>();
 
 generator
+  .select(["otherMobile", "ou", "pager"])
   .where({ field: "mobile", criteria: "404*" })
   .whereAnd({ field: "memberOf", criteria: "admin*" })
-  .orderBy({ field: "msDS-NcType", order: "asc" })
+  .whereOr({ field: "homePostalAddress", criteria: "*Georgia" })
   .whereNot({ field: "middleName", criteria: "joe" })
-  .whereAnd({ field: "msCOM-UserLink", criteria: "*foo" })
+  .orderBy({ field: "msDS-NcType", order: "asc" })
   .toString();
 ```
 

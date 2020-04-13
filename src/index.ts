@@ -1,28 +1,35 @@
 type QueryLevel = "base" | "one" | "sub";
 
-interface OrderByInput<T = {}> {
+interface OrderByInput<T = any> {
   field: keyof T;
   order: "desc" | "asc";
 }
 
 interface Query {
-  returnFields?: string[];
+  select?: SelectInput[];
   where?: WhereInput;
   whereAnd: WhereInput[];
   whereOr: WhereInput[];
   whereRaw: WhereInput[];
   whereNot: WhereInput[];
   orderBy: OrderByInput[];
+  limit: number;
 }
 
 interface WhereInput<T = any> {
   field: keyof T;
+  /**
+   * - '*' retrieve all objects with attribute
+   * - '!*' retrieve all objects do not have attribute
+   */
   criteria: string;
 }
 
 interface QueryInput {
   queryLevel?: QueryLevel;
 }
+
+type SelectInput<T = any> = keyof T;
 
 export class Generator<T = any> {
   private queryLevel!: QueryLevel;
@@ -36,15 +43,23 @@ export class Generator<T = any> {
       whereNot: [],
       whereRaw: [],
       whereOr: [],
+      select: [],
+      limit: 0,
     };
   }
 
+  /** ldap representation of query */
   public toString() {
     console.log(`File: index.ts,`, `Line: 43 => `, this.query);
   }
 
   /** (cn=foo) */
   public where(input: WhereInput<T>) {
+    if (this.query.where) {
+      throw new Error(
+        `where can be one time use! use whereAnd, whereOr or whereNot instead`,
+      );
+    }
     this.query.where = input;
     return this;
   }
@@ -73,8 +88,21 @@ export class Generator<T = any> {
     return this;
   }
 
-  /**  */
-  public orderBy({ field, order }: OrderByInput<T>) {
+  /** return attributes */
+  public select(fields: SelectInput<T>[]) {
+    this.query.select = this.query.select?.concat(fields);
+    return this;
+  }
+
+  /** sort result */
+  public orderBy(input: OrderByInput<T>) {
+    this.query.orderBy?.push(input);
+    return this;
+  }
+
+  /** number of records */
+  public limit(input: number) {
+    this.query.limit = input;
     return this;
   }
 
