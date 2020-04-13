@@ -24,3 +24,4 @@ test/fixtures/test*
 out
 docs
 dist
+generated
