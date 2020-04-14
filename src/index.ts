@@ -1,4 +1,6 @@
-type QueryLevel = "base" | "one" | "sub";
+import type { Logger } from "pino";
+
+type Scope = "base" | "one" | "sub";
 
 interface OrderByInput<T = any> {
   field: keyof T;
@@ -25,18 +27,23 @@ interface WhereInput<T = any> {
   criteria: string;
 }
 
-interface QueryInput {
-  queryLevel?: QueryLevel;
+interface GeneratorInput {
+  scope?: Scope;
+  page?: boolean;
+  pageSize?: number;
+  logger?: Logger;
 }
 
 type SelectInput<T = any> = keyof T;
 
 export class Generator<T = any> {
-  private queryLevel!: QueryLevel;
+  private scope!: Scope;
   private query!: Query;
+  private logger?: Logger;
 
-  constructor(options?: QueryInput) {
-    this.queryLevel = options?.queryLevel ?? "base";
+  constructor(options?: GeneratorInput) {
+    this.logger = options?.logger;
+    this.scope = options?.scope ?? "base";
     this.query = {
       orderBy: [],
       whereAnd: [],
@@ -49,8 +56,41 @@ export class Generator<T = any> {
   }
 
   /** ldap representation of query */
-  public toString() {
-    console.log(`File: index.ts,`, `Line: 43 => `, this.query);
+  public toString(): string {
+    const result: string[] = [];
+
+    if (this.query.where) {
+      result.push(
+        `(${String(this.query.where.field)}=${this.query.where.criteria})`,
+      );
+    }
+
+    if (this.query.whereAnd) {
+      result.push(
+        `(&${this.query.whereAnd
+          .map((el) => `(${el.field as string}=${el.criteria})`)
+          .join("")})`,
+      );
+    }
+
+    if (this.query.whereOr) {
+      result.push(
+        `(|${this.query.whereOr
+          .map((el) => `(${el.field as string}=${el.criteria})`)
+          .join("")})`,
+      );
+    }
+
+    if (this.query.whereNot) {
+      result.push(
+        `(!${this.query.whereNot
+          .map((el) => `(${el.field as string}=${el.criteria})`)
+          .join("")})`,
+      );
+    }
+
+    const all = result.join("");
+    return `(&${all})`;
   }
 
   /** (cn=foo) */
@@ -66,6 +106,7 @@ export class Generator<T = any> {
 
   /** whatever you decide! */
   public whereRaw(input: WhereInput<T>) {
+    this.logger?.warn(`sorry, whereRaw function doesn't implemented yet!`);
     this.query.whereRaw?.push(input);
     return this;
   }
@@ -96,21 +137,25 @@ export class Generator<T = any> {
 
   /** sort result */
   public orderBy(input: OrderByInput<T>) {
+    this.logger?.warn(`sorry, orderBy function doesn't implemented yet!`);
     this.query.orderBy?.push(input);
     return this;
   }
 
   /** number of records */
   public limit(input: number) {
+    this.logger?.warn(`sorry, limit function doesn't implemented yet!`);
     this.query.limit = input;
     return this;
   }
 
   public del() {
+    this.logger?.warn(`sorry, del function doesn't implemented yet!`);
     return this;
   }
 
   public add() {
+    this.logger?.warn(`sorry, add function doesn't implemented yet!`);
     return this;
   }
 }

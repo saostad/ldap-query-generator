@@ -1,0 +1,159 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ldap-query-generator</title>
+	<meta name="description" content="Documentation for ldap-query-generator">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">ldap-query-generator</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>ldap-query-generator</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#ldap-query-generator" id="ldap-query-generator" style="color: inherit; text-decoration: none;">
+					<h1>LDAP query generator</h1>
+				</a>
+				<p>Writing LDAP queries is hard!
+				this is a tool to generate LDAP operations defined in <a href="https://tools.ietf.org/html/rfc4511">RFC 4511</a></p>
+				<a href="#as-easy-as" id="as-easy-as" style="color: inherit; text-decoration: none;">
+					<h2>AS Easy AS</h2>
+				</a>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Generator } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-query-generator"</span>;
+
+<span class="hljs-keyword">const</span> generator = <span class="hljs-keyword">new</span> Generator&lt;User&gt;();
+
+<span class="hljs-keyword">const</span> generator = <span class="hljs-keyword">new</span> Generator&lt;User&gt;();
+<span class="hljs-keyword">const</span> query = generator
+  .select([<span class="hljs-string">"otherMobile"</span>, <span class="hljs-string">"ou"</span>, <span class="hljs-string">"pager"</span>])
+  .where({ field: <span class="hljs-string">"mobile"</span>, criteria: <span class="hljs-string">"404*"</span> })
+  .whereAnd({ field: <span class="hljs-string">"memberOf"</span>, criteria: <span class="hljs-string">"admin*"</span> })
+  .whereAnd({ field: <span class="hljs-string">"info"</span>, criteria: <span class="hljs-string">"my-info"</span> })
+  .whereOr({ field: <span class="hljs-string">"mail"</span>, criteria: <span class="hljs-string">"*@domain.com"</span> })
+  .whereOr({ field: <span class="hljs-string">"homePostalAddress"</span>, criteria: <span class="hljs-string">"*Georgia"</span> })
+  .whereNot({ field: <span class="hljs-string">"middleName"</span>, criteria: <span class="hljs-string">"joe"</span> })
+  .orderBy({ field: <span class="hljs-string">"msDS-NcType"</span>, order: <span class="hljs-string">"asc"</span> })
+  .toString();
+
+<span class="hljs-built_in">console</span>.log(query);</code></pre>
+				<p>Output:</p>
+				<pre><code>(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">mobile=404*</span>)(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">memberOf=admin*</span>)(<span class="hljs-name">info=my-info</span>))(|(<span class="hljs-name">mail=*</span>@domain.com)(<span class="hljs-name">homePostalAddress=*Georgia</span>))(<span class="hljs-name">!</span>(<span class="hljs-name">middleName=joe</span>)))</code></pre>
+				<a href="#todo" id="todo" style="color: inherit; text-decoration: none;">
+					<h2>TODO</h2>
+				</a>
+				<ul>
+					<li><input disabled="" type="checkbox"> Search Filters <a href="https://tools.ietf.org/html/rfc4515">RFC4515</a></li>
+					<li><input disabled="" type="checkbox"> Modify Operation</li>
+					<li><input disabled="" type="checkbox"> Add Operation</li>
+					<li><input disabled="" type="checkbox"> Delete Operation</li>
+					<li><input disabled="" type="checkbox"> Modify DN Operation</li>
+					<li><input disabled="" type="checkbox"> Compare Operation</li>
+				</ul>
+				<a href="#inspired-by" id="inspired-by" style="color: inherit; text-decoration: none;">
+					<h2>Inspired By:</h2>
+				</a>
+				<ul>
+					<li><a href="http://www.phpldaptools.com/tutorials/Building-LDAP-Queries/">PHP LdapTools</a></li>
+					<li><a href="http://knexjs.org/">knex.js</a></li>
+					<li><a href="http://ldapjs.org/filters.html">ldap.js</a></li>
+					<li><a href="https://github.com/Adldap2/Adldap2">Adldap2</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_index_.html">&quot;index&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

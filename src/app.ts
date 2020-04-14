@@ -11,14 +11,17 @@ export async function main() {
   });
 
   const generator = new Generator<User>();
-  generator
+  const query = generator
     .select(["otherMobile", "ou", "pager"])
     .where({ field: "mobile", criteria: "404*" })
     .whereAnd({ field: "memberOf", criteria: "admin*" })
+    .whereAnd({ field: "info", criteria: "my-info" })
+    .whereOr({ field: "mail", criteria: "*@domain.com" })
     .whereOr({ field: "homePostalAddress", criteria: "*Georgia" })
     .whereNot({ field: "middleName", criteria: "joe" })
     .orderBy({ field: "msDS-NcType", order: "asc" })
     .toString();
+  console.log(`File: app.ts,`, `Line: 22 => `, query);
 }
 
 main().catch((err: Error) => {

@@ -22,6 +22,5 @@ test/fixtures/test*
 .idea
 
 out
-docs
 dist
 generated
