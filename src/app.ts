@@ -10,10 +10,10 @@ export async function main() {
     prettyPrint: { colorize: true, translateTime: " yyyy-mm-dd HH:MM:ss" },
   });
 
-  const qGen = new QueryGenerator<User>();
+  const qGen = new QueryGenerator<User>({ logger });
   const { query } = qGen
     .select(["USNIntersite", "aCSPolicyName"])
-    .where({ field: "mobile", criteria: "404*" })
+    // .where({ field: "mobile", criteria: "404*" })
     .whereAnd({ field: "memberOf", criteria: "admin*" })
     .whereAnd({ field: "info", criteria: "my-info" })
     .whereOr({ field: "mail", criteria: "*@domain.com" })

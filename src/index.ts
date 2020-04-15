@@ -1,4 +1,5 @@
 import type { Logger } from "pino";
+import { toString } from "./helpers/tsString";
 
 type Scope = "base" | "one" | "sub";
 
@@ -7,7 +8,7 @@ interface OrderByInput<T = any> {
   order: "desc" | "asc";
 }
 
-interface Query {
+export interface Query {
   scope: Scope;
   attributes?: SelectInput[];
   where?: WhereInput;
@@ -47,6 +48,7 @@ export class QueryGenerator<T = any> {
 
     this.query = {
       scope: options?.scope ?? "base",
+      where: undefined,
       orderBy: [],
       whereAnd: [],
       whereNot: [],
@@ -54,51 +56,13 @@ export class QueryGenerator<T = any> {
       whereOr: [],
       attributes: [],
       limit: 0,
-      toString: this.toString,
+      toString: () => toString(this.query),
     };
-  }
-
-  /** ldap representation of query */
-  private toString(): string {
-    const result: string[] = [];
-
-    if (this.query.where) {
-      result.push(
-        `(${String(this.query.where.field)}=${this.query.where.criteria})`,
-      );
-    }
-
-    if (this.query.whereAnd.length > 0) {
-      result.push(
-        `(&${this.query.whereAnd
-          .map((el) => `(${el.field as string}=${el.criteria})`)
-          .join("")})`,
-      );
-    }
-
-    if (this.query.whereOr.length > 0) {
-      result.push(
-        `(|${this.query.whereOr
-          .map((el) => `(${el.field as string}=${el.criteria})`)
-          .join("")})`,
-      );
-    }
-
-    if (this.query.whereNot.length > 0) {
-      result.push(
-        `(!${this.query.whereNot
-          .map((el) => `(${el.field as string}=${el.criteria})`)
-          .join("")})`,
-      );
-    }
-
-    const all = result.join("");
-    return `(&${all})`;
   }
 
   /** (cn=foo) */
   public where(input: WhereInput<T>) {
-    if (this.query.where) {
+    if (this.query?.where) {
       throw new Error(
         `where can be one time use! use whereAnd, whereOr or whereNot instead`,
       );
