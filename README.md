@@ -6,30 +6,55 @@ this is a tool to generate LDAP operations defined in [RFC 4511](https://tools.i
 ## AS Easy AS
 
 ```ts
-import { Generator } from "ldap-query-generator";
+import { QueryGenerator } from "ldap-query-generator";
 
-const generator = new Generator<User>();
+/** User Fields */
+interface User {}
 
-const generator = new Generator<User>();
-const query = generator
-  .select(["otherMobile", "ou", "pager"])
-  .where({ field: "mobile", criteria: "404*" })
-  .whereAnd({ field: "memberOf", criteria: "admin*" })
-  .whereAnd({ field: "info", criteria: "my-info" })
-  .whereOr({ field: "mail", criteria: "*@domain.com" })
-  .whereOr({ field: "homePostalAddress", criteria: "*Georgia" })
-  .whereNot({ field: "middleName", criteria: "joe" })
-  .orderBy({ field: "msDS-NcType", order: "asc" })
-  .toString();
+/** You can use it with or without generic type */
+const qGen = new QueryGenerator<User>();
+const { query } = qGen
+  .select(["USNIntersite", "aCSPolicyName"])
+  .where({ field: "mobile", action: "substrings", criteria: "404*999*" })
+  .whereAnd({ field: "memberOf", action: "startWith", criteria: "admin" })
+  .whereAnd({ field: "memberOf", action: "endWith", criteria: "office" })
+  .whereAnd({ field: "badPwdCount", action: "lessOrEqual", criteria: "2" })
+  .whereAnd({ field: "info", action: "approxMatch", criteria: "my-info" })
+  .whereOr({ field: "mail", action: "present", criteria: "*@domain.com" })
+  .whereOr({
+    field: "homePostalAddress",
+    action: "substrings",
+    criteria: "Georgia",
+  })
+  .whereNot({
+    field: "delivContLength",
+    action: "greaterOrEqual",
+    criteria: "6",
+  })
+  .whereNot({
+    field: "middleName",
+    action: "extensible",
+    criteria: "joe",
+    extensibleConfig: {
+      dn: true,
+      ignoreField: true,
+      matchingRuleId: "1.2.840.113556.1.4.1941",
+    },
+  })
+  .orderBy({ field: "msDS-NcType", order: "asc" });
 
-console.log(query);
+console.log(query.toString());
 ```
 
 Output:
 
 ```
-(&(mobile=404*)(&(memberOf=admin*)(info=my-info))(|(mail=*@domain.com)(homePostalAddress=*Georgia))(!(middleName=joe)))
+(&(mobile=404*999*)(&(memberOf=admin*)(memberOf=*office)(badPwdCount<=2)(info~=my-info))(|(mail=*)(homePostalAddress=Georgia))(!(delivContLength>=6)(:dn:1.2.840.113556.1.4.1941:=joe)))
 ```
+
+### Api Documentations
+
+for full API documentation look at [API Website](https://saostad.github.io/ldap-query-generator/modules/_index_.html)
 
 ## TODO
 

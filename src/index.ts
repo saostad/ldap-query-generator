@@ -1,5 +1,6 @@
 import type { Logger } from "pino";
 import { toString } from "./helpers/tsString";
+import { CriteriaActions } from "./helpers/criteria";
 
 type Scope = "base" | "one" | "sub";
 
@@ -21,13 +22,19 @@ export interface Query {
   toString: () => string;
 }
 
-interface WhereInput<T = any> {
+export interface WhereInput<T = any> {
   field: keyof T;
   /**
    * - '*' retrieve all objects with attribute
    * - '!*' retrieve all objects do not have attribute
    */
   criteria: string;
+  action: CriteriaActions;
+  extensibleConfig?: {
+    ignoreField?: boolean;
+    dn?: boolean;
+    matchingRuleId?: string;
+  };
 }
 
 interface GeneratorInput {

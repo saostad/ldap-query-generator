@@ -72,25 +72,41 @@
 				<a href="#as-easy-as" id="as-easy-as" style="color: inherit; text-decoration: none;">
 					<h2>AS Easy AS</h2>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Generator } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-query-generator"</span>;
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { QueryGenerator } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-query-generator"</span>;
 
-<span class="hljs-keyword">const</span> generator = <span class="hljs-keyword">new</span> Generator&lt;User&gt;();
+<span class="hljs-keyword">const</span> qGen = <span class="hljs-keyword">new</span> QueryGenerator&lt;User&gt;({ logger });
+<span class="hljs-keyword">const</span> { query } = qGen
+  .select([<span class="hljs-string">"USNIntersite"</span>, <span class="hljs-string">"aCSPolicyName"</span>])
+  .where({ field: <span class="hljs-string">"mobile"</span>, action: <span class="hljs-string">"substrings"</span>, criteria: <span class="hljs-string">"404*999*"</span> })
+  .whereAnd({ field: <span class="hljs-string">"memberOf"</span>, action: <span class="hljs-string">"substrings"</span>, criteria: <span class="hljs-string">"admin*"</span> })
+  .whereAnd({ field: <span class="hljs-string">"badPwdCount"</span>, action: <span class="hljs-string">"lessOrEqual"</span>, criteria: <span class="hljs-string">"2"</span> })
+  .whereAnd({ field: <span class="hljs-string">"info"</span>, action: <span class="hljs-string">"approxMatch"</span>, criteria: <span class="hljs-string">"my-info"</span> })
+  .whereOr({ field: <span class="hljs-string">"mail"</span>, action: <span class="hljs-string">"present"</span>, criteria: <span class="hljs-string">"*@domain.com"</span> })
+  .whereOr({
+    field: <span class="hljs-string">"homePostalAddress"</span>,
+    action: <span class="hljs-string">"substrings"</span>,
+    criteria: <span class="hljs-string">"Georgia"</span>,
+  })
+  .whereNot({
+    field: <span class="hljs-string">"delivContLength"</span>,
+    action: <span class="hljs-string">"greaterOrEqual"</span>,
+    criteria: <span class="hljs-string">"6"</span>,
+  })
+  .whereNot({
+    field: <span class="hljs-string">"middleName"</span>,
+    action: <span class="hljs-string">"extensible"</span>,
+    criteria: <span class="hljs-string">"joe"</span>,
+    extensibleConfig: {
+      dn: <span class="hljs-literal">true</span>,
+      ignoreField: <span class="hljs-literal">true</span>,
+      matchingRuleId: <span class="hljs-string">"1.2.840.113556.1.4.1941"</span>,
+    },
+  })
+  .orderBy({ field: <span class="hljs-string">"msDS-NcType"</span>, order: <span class="hljs-string">"asc"</span> });
 
-<span class="hljs-keyword">const</span> generator = <span class="hljs-keyword">new</span> Generator&lt;User&gt;();
-<span class="hljs-keyword">const</span> query = generator
-  .select([<span class="hljs-string">"otherMobile"</span>, <span class="hljs-string">"ou"</span>, <span class="hljs-string">"pager"</span>])
-  .where({ field: <span class="hljs-string">"mobile"</span>, criteria: <span class="hljs-string">"404*"</span> })
-  .whereAnd({ field: <span class="hljs-string">"memberOf"</span>, criteria: <span class="hljs-string">"admin*"</span> })
-  .whereAnd({ field: <span class="hljs-string">"info"</span>, criteria: <span class="hljs-string">"my-info"</span> })
-  .whereOr({ field: <span class="hljs-string">"mail"</span>, criteria: <span class="hljs-string">"*@domain.com"</span> })
-  .whereOr({ field: <span class="hljs-string">"homePostalAddress"</span>, criteria: <span class="hljs-string">"*Georgia"</span> })
-  .whereNot({ field: <span class="hljs-string">"middleName"</span>, criteria: <span class="hljs-string">"joe"</span> })
-  .orderBy({ field: <span class="hljs-string">"msDS-NcType"</span>, order: <span class="hljs-string">"asc"</span> })
-  .toString();
-
-<span class="hljs-built_in">console</span>.log(query);</code></pre>
+<span class="hljs-built_in">console</span>.log(query.toString());</code></pre>
 				<p>Output:</p>
-				<pre><code>(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">mobile=404*</span>)(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">memberOf=admin*</span>)(<span class="hljs-name">info=my-info</span>))(|(<span class="hljs-name">mail=*</span>@domain.com)(<span class="hljs-name">homePostalAddress=*Georgia</span>))(<span class="hljs-name">!</span>(<span class="hljs-name">middleName=joe</span>)))</code></pre>
+				<pre><code>(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">mobile=404*999*</span>)(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">memberOf=admin*</span>)(<span class="hljs-name">badPwdCount&lt;=2</span>)(<span class="hljs-name">info</span>~=my-info))(|(<span class="hljs-name">mail=*</span>)(<span class="hljs-name">homePostalAddress=Georgia</span>))(<span class="hljs-name">!</span>(<span class="hljs-name">delivContLength&gt;=6</span>)(<span class="hljs-symbol">:dn:1.2.840.113556.1.4.1941:=joe</span>)))</code></pre>
 				<a href="#todo" id="todo" style="color: inherit; text-decoration: none;">
 					<h2>TODO</h2>
 				</a>
@@ -101,6 +117,8 @@
 					<li><input disabled="" type="checkbox"> Delete Operation</li>
 					<li><input disabled="" type="checkbox"> Modify DN Operation</li>
 					<li><input disabled="" type="checkbox"> Compare Operation</li>
+					<li><input disabled="" type="checkbox"> Validate ldap search filters</li>
+					<li><input disabled="" type="checkbox"> add trace logs in all functions</li>
 				</ul>
 				<a href="#inspired-by" id="inspired-by" style="color: inherit; text-decoration: none;">
 					<h2>Inspired By:</h2>
@@ -120,6 +138,12 @@
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="modules/_helpers_criteria_.html">&quot;helpers/criteria&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_helpers_tsstring_.html">&quot;helpers/ts<wbr>String&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="modules/_index_.html">&quot;index&quot;</a>
 					</li>
 				</ul>
@@ -136,6 +160,7 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>

@@ -13,12 +13,32 @@ export async function main() {
   const qGen = new QueryGenerator<User>({ logger });
   const { query } = qGen
     .select(["USNIntersite", "aCSPolicyName"])
-    // .where({ field: "mobile", criteria: "404*" })
-    .whereAnd({ field: "memberOf", criteria: "admin*" })
-    .whereAnd({ field: "info", criteria: "my-info" })
-    .whereOr({ field: "mail", criteria: "*@domain.com" })
-    .whereOr({ field: "homePostalAddress", criteria: "*Georgia" })
-    .whereNot({ field: "middleName", criteria: "joe" })
+    .where({ field: "mobile", action: "substrings", criteria: "404*999*" })
+    .whereAnd({ field: "memberOf", action: "startWith", criteria: "admin" })
+    .whereAnd({ field: "memberOf", action: "endWith", criteria: "office" })
+    .whereAnd({ field: "badPwdCount", action: "lessOrEqual", criteria: "2" })
+    .whereAnd({ field: "info", action: "approxMatch", criteria: "my-info" })
+    .whereOr({ field: "mail", action: "present", criteria: "*@domain.com" })
+    .whereOr({
+      field: "homePostalAddress",
+      action: "substrings",
+      criteria: "Georgia",
+    })
+    .whereNot({
+      field: "delivContLength",
+      action: "greaterOrEqual",
+      criteria: "6",
+    })
+    .whereNot({
+      field: "middleName",
+      action: "extensible",
+      criteria: "joe",
+      extensibleConfig: {
+        dn: true,
+        ignoreField: true,
+        matchingRuleId: "1.2.840.113556.1.4.1941",
+      },
+    })
     .orderBy({ field: "msDS-NcType", order: "asc" });
 
   console.log(`File: app.ts,`, `Line: 22 => `, query.toString());

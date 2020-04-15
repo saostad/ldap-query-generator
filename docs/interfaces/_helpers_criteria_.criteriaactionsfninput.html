@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>GeneratorInput | ldap-query-generator</title>
+	<title>CriteriaActionsFnInput | ldap-query-generator</title>
 	<meta name="description" content="Documentation for ldap-query-generator">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_index_.html">&quot;index&quot;</a>
+					<a href="../modules/_helpers_criteria_.html">&quot;helpers/criteria&quot;</a>
 				</li>
 				<li>
-					<a href="_index_.generatorinput.html">GeneratorInput</a>
+					<a href="_helpers_criteria_.criteriaactionsfninput.html">CriteriaActionsFnInput</a>
 				</li>
 			</ul>
-			<h1>Interface GeneratorInput</h1>
+			<h1>Interface CriteriaActionsFnInput</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">GeneratorInput</span>
+						<span class="target">CriteriaActionsFnInput</span>
 					</li>
 				</ul>
 			</section>
@@ -84,10 +84,8 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_index_.generatorinput.html#logger" class="tsd-kind-icon">logger</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_index_.generatorinput.html#page" class="tsd-kind-icon">page</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_index_.generatorinput.html#pagesize" class="tsd-kind-icon">page<wbr>Size</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_index_.generatorinput.html#scope" class="tsd-kind-icon">scope</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_helpers_criteria_.criteriaactionsfninput.html#criteria" class="tsd-kind-icon">criteria</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_helpers_criteria_.criteriaactionsfninput.html#field" class="tsd-kind-icon">field</a></li>
 							</ul>
 						</section>
 					</div>
@@ -96,42 +94,22 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="logger" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> logger</h3>
-					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Logger</span></div>
+					<a name="criteria" class="tsd-anchor"></a>
+					<h3>criteria</h3>
+					<div class="tsd-signature tsd-kind-icon">criteria<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-query-generator/blob/bb7fcc4/src/index.ts#L44">index.ts:44</a></li>
+							<li>Defined in helpers/criteria.ts:14</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="page" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> page</h3>
-					<div class="tsd-signature tsd-kind-icon">page<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+					<a name="field" class="tsd-anchor"></a>
+					<h3>field</h3>
+					<div class="tsd-signature tsd-kind-icon">field<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-query-generator/blob/bb7fcc4/src/index.ts#L42">index.ts:42</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="pagesize" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> page<wbr>Size</h3>
-					<div class="tsd-signature tsd-kind-icon">page<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-query-generator/blob/bb7fcc4/src/index.ts#L43">index.ts:43</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="scope" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scope</h3>
-					<div class="tsd-signature tsd-kind-icon">scope<span class="tsd-signature-symbol">:</span> <a href="../modules/_index_.html#scope" class="tsd-signature-type">Scope</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/saostad/ldap-query-generator/blob/bb7fcc4/src/index.ts#L41">index.ts:41</a></li>
+							<li>Defined in helpers/criteria.ts:13</li>
 						</ul>
 					</aside>
 				</section>
@@ -143,57 +121,69 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/_helpers_criteria_.html">&quot;helpers/criteria&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="../modules/_helpers_tsstring_.html">&quot;helpers/ts<wbr>String&quot;</a>
 					</li>
-					<li class="current tsd-kind-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_index_.html">&quot;index&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/_index_.querygenerator.html" class="tsd-kind-icon">Query<wbr>Generator</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
-						<a href="_index_.generatorinput.html" class="tsd-kind-icon">Generator<wbr>Input</a>
+						<a href="_helpers_criteria_.criteriaactionsfninput.html" class="tsd-kind-icon">Criteria<wbr>Actions<wbr>FnInput</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_index_.generatorinput.html#logger" class="tsd-kind-icon">logger</a>
+								<a href="_helpers_criteria_.criteriaactionsfninput.html#criteria" class="tsd-kind-icon">criteria</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_index_.generatorinput.html#page" class="tsd-kind-icon">page</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_index_.generatorinput.html#pagesize" class="tsd-kind-icon">page<wbr>Size</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_index_.generatorinput.html#scope" class="tsd-kind-icon">scope</a>
+								<a href="_helpers_criteria_.criteriaactionsfninput.html#field" class="tsd-kind-icon">field</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
-						<a href="_index_.orderbyinput.html" class="tsd-kind-icon">Order<wbr>ByInput</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_helpers_criteria_.extensiblefninput.html" class="tsd-kind-icon">Extensible<wbr>FnInput</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="_index_.query.html" class="tsd-kind-icon">Query</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_helpers_criteria_.presentfninput.html" class="tsd-kind-icon">Present<wbr>FnInput</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_index_.whereinput.html" class="tsd-kind-icon">Where<wbr>Input</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="../modules/_helpers_criteria_.html#criteriaactions" class="tsd-kind-icon">Criteria<wbr>Actions</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-is-not-exported">
-						<a href="../modules/_index_.html#scope" class="tsd-kind-icon">Scope</a>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_helpers_criteria_.html#approxmatch" class="tsd-kind-icon">approx<wbr>Match</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
-						<a href="../modules/_index_.html#selectinput" class="tsd-kind-icon">Select<wbr>Input</a>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_helpers_criteria_.html#endwith" class="tsd-kind-icon">end<wbr>With</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_helpers_criteria_.html#equal" class="tsd-kind-icon">equal</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_helpers_criteria_.html#extensible" class="tsd-kind-icon">extensible</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_helpers_criteria_.html#greaterorequal" class="tsd-kind-icon">greater<wbr>OrEqual</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_helpers_criteria_.html#lessorequal" class="tsd-kind-icon">less<wbr>OrEqual</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_helpers_criteria_.html#present" class="tsd-kind-icon">present</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_helpers_criteria_.html#startwith" class="tsd-kind-icon">start<wbr>With</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/_helpers_criteria_.html#substrings" class="tsd-kind-icon">substrings</a>
 					</li>
 				</ul>
 			</nav>

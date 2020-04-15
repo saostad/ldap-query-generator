@@ -1,17 +1,68 @@
-import { Query } from "..";
+import { Query, WhereInput } from "..";
+import {
+  equal,
+  substrings,
+  present,
+  lessOrEqual,
+  greaterOrEqual,
+  extensible,
+  approxMatch,
+  endWith,
+  startWith,
+} from "./criteria";
+
+function whereClausesToString({
+  field,
+  criteria,
+  action,
+  extensibleConfig,
+}: WhereInput) {
+  if (action === "equal") {
+    return equal({ field: field as string, criteria });
+  }
+  if (action === "startWith") {
+    return startWith({ field: field as string, criteria });
+  }
+  if (action === "endWith") {
+    return endWith({ field: field as string, criteria });
+  }
+  if (action === "approxMatch") {
+    return approxMatch({ field: field as string, criteria });
+  }
+  if (action === "greaterOrEqual") {
+    return greaterOrEqual({ field: field as string, criteria });
+  }
+  if (action === "lessOrEqual") {
+    return lessOrEqual({ field: field as string, criteria });
+  }
+  if (action === "present") {
+    return present({ field: field as string });
+  }
+  if (action === "substrings") {
+    return substrings({ field: field as string, criteria });
+  }
+  if (action === "extensible") {
+    return extensible({
+      field: extensibleConfig?.ignoreField ? undefined : (field as string),
+      criteria,
+      dn: extensibleConfig?.dn,
+      matchingRuleId: extensibleConfig?.matchingRuleId,
+    });
+  }
+}
 
 /** ldap representation of query */
 export function toString(query: Query): string {
   const result: string[] = [];
 
   if (query.where) {
-    result.push(`(${String(query.where.field)}=${query.where.criteria})`);
+    result.push(`(${whereClausesToString(query.where)})`);
   }
 
   if (query.whereAnd.length > 0) {
     result.push(
       `(&${query.whereAnd
-        .map((el) => `(${el.field as string}=${el.criteria})`)
+        .map((el) => `(${whereClausesToString(el)})`)
         .join("")})`,
     );
   }
@@ -19,7 +70,7 @@ export function toString(query: Query): string {
   if (query.whereOr.length > 0) {
     result.push(
       `(|${query.whereOr
-        .map((el) => `(${el.field as string}=${el.criteria})`)
+        .map((el) => `(${whereClausesToString(el)})`)
         .join("")})`,
     );
   }
@@ -27,7 +78,7 @@ export function toString(query: Query): string {
   if (query.whereNot.length > 0) {
     result.push(
       `(!${query.whereNot
-        .map((el) => `(${el.field as string}=${el.criteria})`)
+        .map((el) => `(${whereClausesToString(el)})`)
         .join("")})`,
     );
   }
