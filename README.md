@@ -39,6 +39,7 @@ Output:
 - [ ] Delete Operation
 - [ ] Modify DN Operation
 - [ ] Compare Operation
+- [ ] Validate ldap search filters
 
 ## Inspired By:
 
