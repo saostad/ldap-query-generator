@@ -65,7 +65,7 @@ export class Generator<T = any> {
       );
     }
 
-    if (this.query.whereAnd) {
+    if (this.query.whereAnd.length > 0) {
       result.push(
         `(&${this.query.whereAnd
           .map((el) => `(${el.field as string}=${el.criteria})`)
@@ -73,7 +73,7 @@ export class Generator<T = any> {
       );
     }
 
-    if (this.query.whereOr) {
+    if (this.query.whereOr.length > 0) {
       result.push(
         `(|${this.query.whereOr
           .map((el) => `(${el.field as string}=${el.criteria})`)
@@ -81,7 +81,7 @@ export class Generator<T = any> {
       );
     }
 
-    if (this.query.whereNot) {
+    if (this.query.whereNot.length > 0) {
       result.push(
         `(!${this.query.whereNot
           .map((el) => `(${el.field as string}=${el.criteria})`)
