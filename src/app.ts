@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import { createLogger, writeLog } from "fast-node-logger";
 import type { User } from "../generated/interfaces/index";
-import { Generator } from "./index";
+import { QueryGenerator } from "./index";
 
 export async function main() {
   const logger = await createLogger({
@@ -10,7 +10,7 @@ export async function main() {
     prettyPrint: { colorize: true, translateTime: " yyyy-mm-dd HH:MM:ss" },
   });
 
-  const generator = new Generator<User>();
+  const generator = new QueryGenerator<User>();
   const query = generator
     .select(["*"])
     .where({ field: "mobile", criteria: "404*" })

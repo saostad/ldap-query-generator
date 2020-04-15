@@ -36,7 +36,7 @@ interface GeneratorInput {
 
 type SelectInput<T = any> = keyof T | string;
 
-export class Generator<T = any> {
+export class QueryGenerator<T = any> {
   private scope!: Scope;
   private query!: Query;
   private logger?: Logger;
@@ -130,7 +130,7 @@ export class Generator<T = any> {
   }
 
   /** return attributes */
-  public select(fields: SelectInput<T>[]) {
+  public select(fields: Array<SelectInput<T>>) {
     this.query.select = this.query.select?.concat(fields);
     return this;
   }
