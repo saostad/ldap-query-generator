@@ -12,6 +12,7 @@
     "format": "prettier --check \"src/**/*.ts\" --write",
     "lint": "eslint --ext \".ts,.js\" src --quiet",
     "gen-docs": "typedoc",
+    "postgen-docs": "node ./github/github.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "tsc": "tsc",
