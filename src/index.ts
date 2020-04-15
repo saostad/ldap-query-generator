@@ -16,6 +16,7 @@ interface Query {
   whereNot: WhereInput[];
   orderBy: OrderByInput[];
   limit: number;
+  toString: () => string;
 }
 
 interface WhereInput<T = any> {
@@ -52,11 +53,12 @@ export class QueryGenerator<T = any> {
       whereOr: [],
       attributes: [],
       limit: 0,
+      toString: this.toString,
     };
   }
 
   /** ldap representation of query */
-  public toString(): string {
+  private toString(): string {
     const result: string[] = [];
 
     if (this.query.where) {
