@@ -34,7 +34,7 @@ interface GeneratorInput {
   logger?: Logger;
 }
 
-type SelectInput<T = any> = keyof T;
+type SelectInput<T = any> = keyof T | string;
 
 export class Generator<T = any> {
   private scope!: Scope;

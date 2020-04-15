@@ -12,7 +12,7 @@ export async function main() {
 
   const generator = new Generator<User>();
   const query = generator
-    .select(["otherMobile", "ou", "pager"])
+    .select(["*"])
     .where({ field: "mobile", criteria: "404*" })
     .whereAnd({ field: "memberOf", criteria: "admin*" })
     .whereAnd({ field: "info", criteria: "my-info" })
