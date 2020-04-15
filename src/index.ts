@@ -3,7 +3,7 @@ import type { Logger } from "pino";
 type Scope = "base" | "one" | "sub";
 
 interface OrderByInput<T = any> {
-  field: keyof T | string;
+  field: keyof T;
   order: "desc" | "asc";
 }
 
@@ -19,7 +19,7 @@ interface Query {
 }
 
 interface WhereInput<T = any> {
-  field: keyof T | string;
+  field: keyof T;
   /**
    * - '*' retrieve all objects with attribute
    * - '!*' retrieve all objects do not have attribute
@@ -34,7 +34,7 @@ interface GeneratorInput {
   logger?: Logger;
 }
 
-type SelectInput<T = any> = keyof T | string;
+type SelectInput<T = any> = keyof T;
 
 export class QueryGenerator<T = any> {
   private scope!: Scope;

@@ -40,6 +40,7 @@ Output:
 - [ ] Modify DN Operation
 - [ ] Compare Operation
 - [ ] Validate ldap search filters
+- [ ] add trace logs in all functions
 
 ## Inspired By:
 
