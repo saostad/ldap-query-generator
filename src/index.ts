@@ -8,7 +8,7 @@ interface OrderByInput<T = any> {
 }
 
 interface Query {
-  select?: SelectInput[];
+  attributes?: SelectInput[];
   where?: WhereInput;
   whereAnd: WhereInput[];
   whereOr: WhereInput[];
@@ -38,7 +38,7 @@ type SelectInput<T = any> = keyof T;
 
 export class QueryGenerator<T = any> {
   private scope!: Scope;
-  private query!: Query;
+  public query!: Query;
   private logger?: Logger;
 
   constructor(options?: GeneratorInput) {
@@ -50,7 +50,7 @@ export class QueryGenerator<T = any> {
       whereNot: [],
       whereRaw: [],
       whereOr: [],
-      select: [],
+      attributes: [],
       limit: 0,
     };
   }
@@ -131,7 +131,7 @@ export class QueryGenerator<T = any> {
 
   /** return attributes */
   public select(fields: Array<SelectInput<T>>) {
-    this.query.select = this.query.select?.concat(fields);
+    this.query.attributes = this.query.attributes?.concat(fields);
     return this;
   }
 
