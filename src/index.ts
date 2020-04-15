@@ -8,6 +8,7 @@ interface OrderByInput<T = any> {
 }
 
 interface Query {
+  scope: Scope;
   attributes?: SelectInput[];
   where?: WhereInput;
   whereAnd: WhereInput[];
@@ -38,14 +39,14 @@ interface GeneratorInput {
 type SelectInput<T = any> = keyof T;
 
 export class QueryGenerator<T = any> {
-  private scope!: Scope;
   public query!: Query;
   private logger?: Logger;
 
   constructor(options?: GeneratorInput) {
     this.logger = options?.logger;
-    this.scope = options?.scope ?? "base";
+
     this.query = {
+      scope: options?.scope ?? "base",
       orderBy: [],
       whereAnd: [],
       whereNot: [],

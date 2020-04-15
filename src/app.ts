@@ -11,7 +11,7 @@ export async function main() {
   });
 
   const qGen = new QueryGenerator<User>();
-  const query = qGen
+  const { query } = qGen
     .select(["USNIntersite", "aCSPolicyName"])
     .where({ field: "mobile", criteria: "404*" })
     .whereAnd({ field: "memberOf", criteria: "admin*" })
@@ -19,9 +19,9 @@ export async function main() {
     .whereOr({ field: "mail", criteria: "*@domain.com" })
     .whereOr({ field: "homePostalAddress", criteria: "*Georgia" })
     .whereNot({ field: "middleName", criteria: "joe" })
-    .orderBy({ field: "msDS-NcType", order: "asc" })
-    .toString();
-  console.log(`File: app.ts,`, `Line: 22 => `, query);
+    .orderBy({ field: "msDS-NcType", order: "asc" });
+
+  console.log(`File: app.ts,`, `Line: 22 => `, query.toString());
 }
 
 main().catch((err: Error) => {
