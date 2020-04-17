@@ -74,11 +74,16 @@
 				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { QueryGenerator } <span class="hljs-keyword">from</span> <span class="hljs-string">"ldap-query-generator"</span>;
 
-<span class="hljs-keyword">const</span> qGen = <span class="hljs-keyword">new</span> QueryGenerator&lt;User&gt;({ logger });
+<span class="hljs-comment">/** User Fields */</span>
+<span class="hljs-keyword">interface</span> User {}
+
+<span class="hljs-comment">/** You can use it with or without generic type */</span>
+<span class="hljs-keyword">const</span> qGen = <span class="hljs-keyword">new</span> QueryGenerator&lt;User&gt;();
 <span class="hljs-keyword">const</span> { query } = qGen
   .select([<span class="hljs-string">"USNIntersite"</span>, <span class="hljs-string">"aCSPolicyName"</span>])
   .where({ field: <span class="hljs-string">"mobile"</span>, action: <span class="hljs-string">"substrings"</span>, criteria: <span class="hljs-string">"404*999*"</span> })
-  .whereAnd({ field: <span class="hljs-string">"memberOf"</span>, action: <span class="hljs-string">"substrings"</span>, criteria: <span class="hljs-string">"admin*"</span> })
+  .whereAnd({ field: <span class="hljs-string">"memberOf"</span>, action: <span class="hljs-string">"startWith"</span>, criteria: <span class="hljs-string">"admin"</span> })
+  .whereAnd({ field: <span class="hljs-string">"memberOf"</span>, action: <span class="hljs-string">"endWith"</span>, criteria: <span class="hljs-string">"office"</span> })
   .whereAnd({ field: <span class="hljs-string">"badPwdCount"</span>, action: <span class="hljs-string">"lessOrEqual"</span>, criteria: <span class="hljs-string">"2"</span> })
   .whereAnd({ field: <span class="hljs-string">"info"</span>, action: <span class="hljs-string">"approxMatch"</span>, criteria: <span class="hljs-string">"my-info"</span> })
   .whereOr({ field: <span class="hljs-string">"mail"</span>, action: <span class="hljs-string">"present"</span>, criteria: <span class="hljs-string">"*@domain.com"</span> })
@@ -106,7 +111,11 @@
 
 <span class="hljs-built_in">console</span>.log(query.toString());</code></pre>
 				<p>Output:</p>
-				<pre><code>(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">mobile=404*999*</span>)(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">memberOf=admin*</span>)(<span class="hljs-name">badPwdCount&lt;=2</span>)(<span class="hljs-name">info</span>~=my-info))(|(<span class="hljs-name">mail=*</span>)(<span class="hljs-name">homePostalAddress=Georgia</span>))(<span class="hljs-name">!</span>(<span class="hljs-name">delivContLength&gt;=6</span>)(<span class="hljs-symbol">:dn:1.2.840.113556.1.4.1941:=joe</span>)))</code></pre>
+				<pre><code>(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">mobile=404*999*</span>)(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">memberOf=admin*</span>)(<span class="hljs-name">memberOf=*office</span>)(<span class="hljs-name">badPwdCount&lt;=2</span>)(<span class="hljs-name">info</span>~=my-info))(|(<span class="hljs-name">mail=*</span>)(<span class="hljs-name">homePostalAddress=Georgia</span>))(<span class="hljs-name">!</span>(<span class="hljs-name">delivContLength&gt;=6</span>)(<span class="hljs-symbol">:dn:1.2.840.113556.1.4.1941:=joe</span>)))</code></pre>
+				<a href="#api-documentations" id="api-documentations" style="color: inherit; text-decoration: none;">
+					<h3>Api Documentations</h3>
+				</a>
+				<p>for full API documentation look at <a href="https://saostad.github.io/ldap-query-generator/modules/_index_.html">API Website</a></p>
 				<a href="#todo" id="todo" style="color: inherit; text-decoration: none;">
 					<h2>TODO</h2>
 				</a>

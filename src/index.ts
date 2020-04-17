@@ -23,7 +23,7 @@ export interface Query {
 }
 
 export interface WhereInput<T = any> {
-  field: keyof T;
+  field: string | keyof T;
   /**
    * - '*' retrieve all objects with attribute
    * - '!*' retrieve all objects do not have attribute
