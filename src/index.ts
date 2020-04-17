@@ -5,7 +5,7 @@ import { CriteriaActions } from "./helpers/criteria";
 type Scope = "base" | "one" | "sub";
 
 interface OrderByInput<T = any> {
-  field: keyof T;
+  field: string | keyof T;
   order: "desc" | "asc";
 }
 
@@ -44,7 +44,7 @@ interface GeneratorInput {
   logger?: Logger;
 }
 
-type SelectInput<T = any> = keyof T;
+type SelectInput<T = any> = string | keyof T;
 
 export class QueryGenerator<T = any> {
   public query!: Query;

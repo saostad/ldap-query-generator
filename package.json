@@ -1,6 +1,6 @@
 {
   "name": "ldap-query-generator",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "LDAP query generator",
   "repository": {
     "type": "git",
