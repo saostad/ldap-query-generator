@@ -40,8 +40,7 @@ const { query } = qGen
       ignoreField: true,
       matchingRuleId: "1.2.840.113556.1.4.1941",
     },
-  })
-  .orderBy({ field: "msDS-NcType", order: "asc" });
+  });
 
 console.log(query.toString());
 ```
@@ -52,6 +51,10 @@ Output:
 (&(mobile=404*999*)(&(memberOf=admin*)(memberOf=*office)(badPwdCount<=2)(info~=my-info))(|(mail=*)(homePostalAddress=Georgia))(!(delivContLength>=6)(:dn:1.2.840.113556.1.4.1941:=joe)))
 ```
 
+### Note:
+
+to auto-generate interface types from schema use [ldap-schema-ts-generator](https://www.npmjs.com/package/ldap-schema-ts-generator)
+
 ### Api Documentations
 
 for full API documentation look at [API Website](https://saostad.github.io/ldap-query-generator/modules/_index_.html)
@@ -59,13 +62,14 @@ for full API documentation look at [API Website](https://saostad.github.io/ldap-
 ## TODO
 
 - [ ] Search Filters [RFC4515](https://tools.ietf.org/html/rfc4515)
-- [ ] Modify Operation
-- [ ] Add Operation
-- [ ] Delete Operation
-- [ ] Modify DN Operation
-- [ ] Compare Operation
+  - [x] where
+  - [x] whereAnd
+  - [x] whereOr
+  - [x] whereNot
+  - [x] select
+  - [x] toString
+  - [ ] whereRaw
 - [ ] Validate ldap search filters
-- [ ] add trace logs in all functions
 
 ## Inspired By:
 

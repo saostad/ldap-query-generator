@@ -38,8 +38,7 @@ export async function main() {
         ignoreField: true,
         matchingRuleId: "1.2.840.113556.1.4.1941",
       },
-    })
-    .orderBy({ field: "msDS-NcType", order: "asc" });
+    });
 
   console.log(`File: app.ts,`, `Line: 22 => `, query.toString());
 }

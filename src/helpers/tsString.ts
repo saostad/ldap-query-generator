@@ -10,6 +10,7 @@ import {
   endWith,
   startWith,
 } from "./criteria";
+import { writeLog } from "fast-node-logger";
 
 function whereClausesToString({
   field,
@@ -17,6 +18,7 @@ function whereClausesToString({
   action,
   extensibleConfig,
 }: WhereInput) {
+  writeLog(`whereClausesToString()`, { level: "trace" });
   if (action === "equal") {
     return equal({ field: field as string, criteria });
   }
@@ -53,6 +55,7 @@ function whereClausesToString({
 
 /** ldap representation of query */
 export function toString(query: Query): string {
+  writeLog(`toString()`, { level: "trace" });
   const result: string[] = [];
 
   if (query.where) {

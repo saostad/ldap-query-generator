@@ -106,12 +106,15 @@
       ignoreField: <span class="hljs-literal">true</span>,
       matchingRuleId: <span class="hljs-string">"1.2.840.113556.1.4.1941"</span>,
     },
-  })
-  .orderBy({ field: <span class="hljs-string">"msDS-NcType"</span>, order: <span class="hljs-string">"asc"</span> });
+  });
 
 <span class="hljs-built_in">console</span>.log(query.toString());</code></pre>
 				<p>Output:</p>
 				<pre><code>(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">mobile=404*999*</span>)(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">memberOf=admin*</span>)(<span class="hljs-name">memberOf=*office</span>)(<span class="hljs-name">badPwdCount&lt;=2</span>)(<span class="hljs-name">info</span>~=my-info))(|(<span class="hljs-name">mail=*</span>)(<span class="hljs-name">homePostalAddress=Georgia</span>))(<span class="hljs-name">!</span>(<span class="hljs-name">delivContLength&gt;=6</span>)(<span class="hljs-symbol">:dn:1.2.840.113556.1.4.1941:=joe</span>)))</code></pre>
+				<a href="#note" id="note" style="color: inherit; text-decoration: none;">
+					<h3>Note:</h3>
+				</a>
+				<p>to auto-generate interface types from schema use <a href="https://www.npmjs.com/package/ldap-schema-ts-generator">ldap-schema-ts-generator</a></p>
 				<a href="#api-documentations" id="api-documentations" style="color: inherit; text-decoration: none;">
 					<h3>Api Documentations</h3>
 				</a>
@@ -120,14 +123,17 @@
 					<h2>TODO</h2>
 				</a>
 				<ul>
-					<li><input disabled="" type="checkbox"> Search Filters <a href="https://tools.ietf.org/html/rfc4515">RFC4515</a></li>
-					<li><input disabled="" type="checkbox"> Modify Operation</li>
-					<li><input disabled="" type="checkbox"> Add Operation</li>
-					<li><input disabled="" type="checkbox"> Delete Operation</li>
-					<li><input disabled="" type="checkbox"> Modify DN Operation</li>
-					<li><input disabled="" type="checkbox"> Compare Operation</li>
+					<li><input disabled="" type="checkbox"> Search Filters <a href="https://tools.ietf.org/html/rfc4515">RFC4515</a><ul>
+							<li><input checked="" disabled="" type="checkbox"> where</li>
+							<li><input checked="" disabled="" type="checkbox"> whereAnd</li>
+							<li><input checked="" disabled="" type="checkbox"> whereOr</li>
+							<li><input checked="" disabled="" type="checkbox"> whereNot</li>
+							<li><input checked="" disabled="" type="checkbox"> select</li>
+							<li><input checked="" disabled="" type="checkbox"> toString</li>
+							<li><input disabled="" type="checkbox"> whereRaw</li>
+						</ul>
+					</li>
 					<li><input disabled="" type="checkbox"> Validate ldap search filters</li>
-					<li><input disabled="" type="checkbox"> add trace logs in all functions</li>
 				</ul>
 				<a href="#inspired-by" id="inspired-by" style="color: inherit; text-decoration: none;">
 					<h2>Inspired By:</h2>

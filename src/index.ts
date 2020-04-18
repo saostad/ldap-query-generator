@@ -1,13 +1,8 @@
-import type { Logger } from "pino";
+import type { Logger } from "fast-node-logger";
 import { toString } from "./helpers/tsString";
 import { CriteriaActions } from "./helpers/criteria";
 
 type Scope = "base" | "one" | "sub";
-
-interface OrderByInput<T = any> {
-  field: string | keyof T;
-  order: "desc" | "asc";
-}
 
 export interface Query {
   scope: Scope;
@@ -17,8 +12,6 @@ export interface Query {
   whereOr: WhereInput[];
   whereRaw: WhereInput[];
   whereNot: WhereInput[];
-  orderBy: OrderByInput[];
-  limit: number;
   toString: () => string;
 }
 
@@ -56,19 +49,18 @@ export class QueryGenerator<T = any> {
     this.query = {
       scope: options?.scope ?? "base",
       where: undefined,
-      orderBy: [],
       whereAnd: [],
       whereNot: [],
       whereRaw: [],
       whereOr: [],
       attributes: [],
-      limit: 0,
       toString: () => toString(this.query),
     };
   }
 
   /** (cn=foo) */
   public where(input: WhereInput<T>) {
+    this.logger?.trace(`where()`);
     if (this.query?.where) {
       throw new Error(
         `where can be one time use! use whereAnd, whereOr or whereNot instead`,
@@ -80,6 +72,7 @@ export class QueryGenerator<T = any> {
 
   /** whatever you decide! */
   public whereRaw(input: WhereInput<T>) {
+    this.logger?.trace(`whereRaw()`);
     this.logger?.warn(`sorry, whereRaw function doesn't implemented yet!`);
     this.query.whereRaw?.push(input);
     return this;
@@ -87,49 +80,29 @@ export class QueryGenerator<T = any> {
 
   /** (&(cn=foo)(sn=bar)) */
   public whereAnd(input: WhereInput<T>) {
+    this.logger?.trace(`whereAnd()`);
     this.query.whereAnd?.push(input);
     return this;
   }
 
   /** (|(cn=foo)(sn=bar)) */
   public whereOr(input: WhereInput<T>) {
+    this.logger?.trace(`whereOr()`);
     this.query.whereOr?.push(input);
     return this;
   }
 
   /** (!(cn=foo)) */
   public whereNot(input: WhereInput<T>) {
+    this.logger?.trace(`whereNot()`);
     this.query.whereNot?.push(input);
     return this;
   }
 
   /** return attributes */
   public select(fields: Array<SelectInput<T>>) {
+    this.logger?.trace(`select()`);
     this.query.attributes = this.query.attributes?.concat(fields);
-    return this;
-  }
-
-  /** sort result */
-  public orderBy(input: OrderByInput<T>) {
-    this.logger?.warn(`sorry, orderBy function doesn't implemented yet!`);
-    this.query.orderBy?.push(input);
-    return this;
-  }
-
-  /** number of records */
-  public limit(input: number) {
-    this.logger?.warn(`sorry, limit function doesn't implemented yet!`);
-    this.query.limit = input;
-    return this;
-  }
-
-  public del() {
-    this.logger?.warn(`sorry, del function doesn't implemented yet!`);
-    return this;
-  }
-
-  public add() {
-    this.logger?.warn(`sorry, add function doesn't implemented yet!`);
     return this;
   }
 }
