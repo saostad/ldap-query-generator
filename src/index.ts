@@ -2,10 +2,7 @@ import type { Logger } from "fast-node-logger";
 import { toString } from "./helpers/tsString";
 import { CriteriaActions } from "./helpers/criteria";
 
-type Scope = "base" | "one" | "sub";
-
 export interface Query {
-  scope: Scope;
   attributes?: SelectInput[];
   where?: WhereInput;
   whereAnd: WhereInput[];
@@ -31,9 +28,6 @@ export interface WhereInput<T = any> {
 }
 
 interface GeneratorInput {
-  scope?: Scope;
-  page?: boolean;
-  pageSize?: number;
   logger?: Logger;
 }
 
@@ -47,7 +41,6 @@ export class QueryGenerator<T = any> {
     this.logger = options?.logger;
 
     this.query = {
-      scope: options?.scope ?? "base",
       where: undefined,
       whereAnd: [],
       whereNot: [],
