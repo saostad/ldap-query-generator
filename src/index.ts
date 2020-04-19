@@ -20,7 +20,7 @@ export interface Query {
 }
 
 export interface WhereInput<T = any> {
-  field: string | keyof T;
+  field: keyof T;
   /**
    * - '*' retrieve all objects with attribute
    * - '!*' retrieve all objects do not have attribute
@@ -39,7 +39,7 @@ interface GeneratorInput {
   logger?: Logger;
 }
 
-type SelectInput<T = any> = string | keyof T;
+type SelectInput<T = any> = keyof T;
 
 /** query generator instance */
 export class QueryGenerator<T = any> {

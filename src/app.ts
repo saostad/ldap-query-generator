@@ -12,7 +12,7 @@ export async function main() {
 
   const qGen = new QueryGenerator<User>({ logger });
   const { query } = qGen
-    .select(["USNIntersite", "aCSPolicyName"])
+    .select(["USNIntersite", "aCSPolicyName", "accountNameHistory"])
     .where({ field: "mobile", action: "substrings", criteria: "404*999*" })
     .whereAnd({ field: "memberOf", action: "startWith", criteria: "admin" })
     .whereAnd({ field: "memberOf", action: "endWith", criteria: "office" })
