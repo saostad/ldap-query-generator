@@ -3,12 +3,19 @@ import { toString } from "./helpers/tsString";
 import { CriteriaActions } from "./helpers/criteria";
 
 export interface Query {
+  /** selected attributes to return */
   attributes?: SelectInput[];
+  /** one time only */
   where?: WhereInput;
+  /** can be use multiple time */
   whereAnd: WhereInput[];
+  /** can be use multiple time */
   whereOr: WhereInput[];
+  /** can be use multiple time */
   whereRaw: WhereInput[];
+  /** can be use multiple time */
   whereNot: WhereInput[];
+  /** generate ldap filter */
   toString: () => string;
 }
 
@@ -28,11 +35,13 @@ export interface WhereInput<T = any> {
 }
 
 interface GeneratorInput {
+  /** instance of logger compatible with pino */
   logger?: Logger;
 }
 
 type SelectInput<T = any> = string | keyof T;
 
+/** query generator instance */
 export class QueryGenerator<T = any> {
   public query!: Query;
   private logger?: Logger;
@@ -92,7 +101,7 @@ export class QueryGenerator<T = any> {
     return this;
   }
 
-  /** return attributes */
+  /** select return attributes */
   public select(fields: Array<SelectInput<T>>) {
     this.logger?.trace(`select()`);
     this.query.attributes = this.query.attributes?.concat(fields);
