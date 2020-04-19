@@ -39,7 +39,7 @@ interface GeneratorInput {
   logger?: Logger;
 }
 
-type SelectInput<T = any> = keyof T;
+type SelectInput<T = any> = keyof T | "*";
 
 /** query generator instance */
 export class QueryGenerator<T = any> {
@@ -101,7 +101,8 @@ export class QueryGenerator<T = any> {
     return this;
   }
 
-  /** select return attributes */
+  /** select return attributes
+   * - put ["*"] for select all available attributes */
   public select(fields: Array<SelectInput<T>>) {
     this.logger?.trace(`select()`);
     this.query.attributes = this.query.attributes?.concat(fields);
