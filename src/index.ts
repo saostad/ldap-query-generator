@@ -2,9 +2,9 @@ import type { Logger } from "fast-node-logger";
 import { toString } from "./helpers/tsString";
 import { CriteriaActions } from "./helpers/criteria";
 
-export interface Query {
+export interface Query<T = any> {
   /** selected attributes to return */
-  attributes?: SelectInput[];
+  attributes?: SelectInput<T>[];
   /** one time only */
   where?: WhereInput;
   /** can be use multiple time */
@@ -43,7 +43,7 @@ type SelectInput<T = any> = keyof T | "*";
 
 /** query generator instance */
 export class QueryGenerator<T = any> {
-  public query!: Query;
+  public query!: Query<T>;
   private logger?: Logger;
 
   constructor(options?: GeneratorInput) {
