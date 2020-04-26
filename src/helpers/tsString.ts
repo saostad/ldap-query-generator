@@ -1,4 +1,4 @@
-import { Query, WhereInput } from "..";
+import { Query, WhereInput } from "../index";
 import {
   equal,
   substrings,
@@ -53,7 +53,7 @@ function whereClausesToString({
   }
 }
 
-/** ldap representation of query */
+/** generate ldap representation of query */
 export function toString(query: Query): string {
   writeLog(`toString()`, { level: "trace" });
   const result: string[] = [];
@@ -84,6 +84,10 @@ export function toString(query: Query): string {
         .map((el) => `(${whereClausesToString(el)})`)
         .join("")})`,
     );
+  }
+
+  if (query.whereRaw.length > 0) {
+    result.push(`${query.whereRaw.map((el) => `(${el})`).join("")}`);
   }
 
   const all = result.join("");

@@ -9,10 +9,10 @@ export type CriteriaActions =
   | "startWith"
   | "endWith";
 
-interface CriteriaActionsFnInput {
+type CriteriaActionsFnInput = {
   field: string;
   criteria: string;
-}
+};
 /** equalityMatch */
 export function equal({ field, criteria }: CriteriaActionsFnInput) {
   if (criteria.includes("*")) {
@@ -63,20 +63,20 @@ export function lessOrEqual({ field, criteria }: CriteriaActionsFnInput) {
   return `${field}<=${criteria}`;
 }
 
-interface PresentFnInput {
+type PresentFnInput = {
   field: string;
-}
+};
 /** field exist */
 export function present({ field }: PresentFnInput) {
   return `${field}=*`;
 }
 
-interface ExtensibleFnInput {
+type ExtensibleFnInput = {
   field?: string;
   dn?: boolean;
   matchingRuleId?: string;
   criteria: string;
-}
+};
 /**
  * @example
  * (cn:1.2.3.4.5:=Fred Flintstone)

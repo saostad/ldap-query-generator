@@ -40,7 +40,9 @@ const { query } = qGen
       ignoreField: true,
       matchingRuleId: "1.2.840.113556.1.4.1941",
     },
-  });
+  })
+  .whereRaw("&(cn=3)(dn=*)")
+  .whereRaw("phone=*11");
 
 console.log(query.toString());
 ```
@@ -48,7 +50,7 @@ console.log(query.toString());
 Output:
 
 ```
-(&(mobile=404*999*)(&(memberOf=admin*)(memberOf=*office)(badPwdCount<=2)(info~=my-info))(|(mail=*)(homePostalAddress=Georgia))(!(delivContLength>=6)(:dn:1.2.840.113556.1.4.1941:=joe)))
+(&(mobile=404*999*)(&(memberOf=admin*)(memberOf=*office)(badPwdCount<=2)(info~=my-info))(|(mail=*)(homePostalAddress=Georgia))(!(delivContLength>=6)(:dn:1.2.840.113556.1.4.1941:=joe))(&(cn=3)(dn=*))(phone=*11))
 ```
 
 ### Note:
@@ -68,7 +70,7 @@ for full API documentation look at [API Website](https://saostad.github.io/ldap-
   - [x] whereNot
   - [x] select
   - [x] toString
-  - [ ] whereRaw
+  - [x] whereRaw
 - [ ] Validate ldap search filters
 
 ## Inspired By:

@@ -12,7 +12,7 @@ export type Query<T = any> = {
   /** can be use multiple time */
   whereOr: WhereInput[];
   /** can be use multiple time */
-  whereRaw: WhereInput[];
+  whereRaw: string[];
   /** can be use multiple time */
   whereNot: WhereInput[];
   /** generate ldap filter */
@@ -72,8 +72,11 @@ export class QueryGenerator<T = any> {
     return this;
   }
 
-  /** whatever you decide! */
-  public whereRaw(input: WhereInput<T>) {
+  /** whatever you decide will be wrap in () and add to the end of generated filter string.
+   * @example &(field1=1234)(field2=*) result: (&(field1=1234)(field2=*))
+   * @note it supposed you know what are you doing!
+   */
+  public whereRaw(input: string) {
     this.logger?.trace(`whereRaw()`);
     this.query.whereRaw?.push(input);
     return this;
