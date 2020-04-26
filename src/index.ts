@@ -2,7 +2,7 @@ import type { Logger } from "fast-node-logger";
 import { toString } from "./helpers/tsString";
 import { CriteriaActions } from "./helpers/criteria";
 
-export interface Query<T = any> {
+export type Query<T = any> = {
   /** selected attributes to return */
   attributes?: SelectInput<T>[];
   /** one time only */
@@ -17,10 +17,10 @@ export interface Query<T = any> {
   whereNot: WhereInput[];
   /** generate ldap filter */
   toString: () => string;
-}
+};
 
-export interface WhereInput<T = any> {
-  field: keyof T;
+export type WhereInput<T = any> = {
+  field: Extract<keyof T, string>;
   /**
    * - '*' retrieve all objects with attribute
    * - '!*' retrieve all objects do not have attribute
@@ -32,14 +32,14 @@ export interface WhereInput<T = any> {
     dn?: boolean;
     matchingRuleId?: string;
   };
-}
+};
 
-interface GeneratorInput {
+type GeneratorInput = {
   /** instance of logger compatible with pino */
   logger?: Logger;
-}
+};
 
-type SelectInput<T = any> = keyof T | "*";
+type SelectInput<T = any> = Extract<keyof T, string> | "*";
 
 /** query generator instance */
 export class QueryGenerator<T = any> {
@@ -75,7 +75,6 @@ export class QueryGenerator<T = any> {
   /** whatever you decide! */
   public whereRaw(input: WhereInput<T>) {
     this.logger?.trace(`whereRaw()`);
-    this.logger?.warn(`sorry, whereRaw function doesn't implemented yet!`);
     this.query.whereRaw?.push(input);
     return this;
   }
