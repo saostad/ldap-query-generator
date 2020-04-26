@@ -106,11 +106,13 @@
       ignoreField: <span class="hljs-literal">true</span>,
       matchingRuleId: <span class="hljs-string">"1.2.840.113556.1.4.1941"</span>,
     },
-  });
+  })
+  .whereRaw(<span class="hljs-string">"&amp;(cn=3)(dn=*)"</span>)
+  .whereRaw(<span class="hljs-string">"phone=*11"</span>);
 
 <span class="hljs-built_in">console</span>.log(query.toString());</code></pre>
 				<p>Output:</p>
-				<pre><code>(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">mobile=404*999*</span>)(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">memberOf=admin*</span>)(<span class="hljs-name">memberOf=*office</span>)(<span class="hljs-name">badPwdCount&lt;=2</span>)(<span class="hljs-name">info</span>~=my-info))(|(<span class="hljs-name">mail=*</span>)(<span class="hljs-name">homePostalAddress=Georgia</span>))(<span class="hljs-name">!</span>(<span class="hljs-name">delivContLength&gt;=6</span>)(<span class="hljs-symbol">:dn:1.2.840.113556.1.4.1941:=joe</span>)))</code></pre>
+				<pre><code>(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">mobile=404*999*</span>)(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">memberOf=admin*</span>)(<span class="hljs-name">memberOf=*office</span>)(<span class="hljs-name">badPwdCount&lt;=2</span>)(<span class="hljs-name">info</span>~=my-info))(|(<span class="hljs-name">mail=*</span>)(<span class="hljs-name">homePostalAddress=Georgia</span>))(<span class="hljs-name">!</span>(<span class="hljs-name">delivContLength&gt;=6</span>)(<span class="hljs-symbol">:dn:1.2.840.113556.1.4.1941:=joe</span>))(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">cn=3</span>)(<span class="hljs-name">dn=*</span>))(<span class="hljs-name">phone=*11</span>))</code></pre>
 				<a href="#note" id="note" style="color: inherit; text-decoration: none;">
 					<h3>Note:</h3>
 				</a>
@@ -130,7 +132,7 @@
 							<li><input checked="" disabled="" type="checkbox"> whereNot</li>
 							<li><input checked="" disabled="" type="checkbox"> select</li>
 							<li><input checked="" disabled="" type="checkbox"> toString</li>
-							<li><input disabled="" type="checkbox"> whereRaw</li>
+							<li><input checked="" disabled="" type="checkbox"> whereRaw</li>
 						</ul>
 					</li>
 					<li><input disabled="" type="checkbox"> Validate ldap search filters</li>
@@ -178,10 +180,6 @@
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>

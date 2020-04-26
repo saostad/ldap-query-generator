@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 import { createLogger, writeLog } from "fast-node-logger";
-import type { User } from "../generated/interfaces/index";
 import { QueryGenerator } from "./index";
 
 export async function main() {
