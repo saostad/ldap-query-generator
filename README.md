@@ -63,7 +63,7 @@ for full API documentation look at [API Website](https://saostad.github.io/ldap-
 
 ## TODO
 
-- [ ] Search Filters [RFC4515](https://tools.ietf.org/html/rfc4515)
+- [ ] LDAP Search Filters [RFC4515](https://tools.ietf.org/html/rfc4515)
   - [x] where
   - [x] whereAnd
   - [x] whereOr
@@ -71,7 +71,18 @@ for full API documentation look at [API Website](https://saostad.github.io/ldap-
   - [x] select
   - [x] toString
   - [x] whereRaw
-- [ ] Validate ldap search filters
+  - [ ] Absence of attribute (!(attribute=_)) , e.g. (!proxyAddresses=_)
+  - [ ] Filter boolean attributes the consideration of the upper/ lower case will be crucial. The use of TRUE or FALSE is absolutely necessary for filtering such booleans.
+  - [ ] Special characters: characters ( ) & | = ! > < ~ \* / \ play a special role for the declaration of LDAP filters.
+  - [ ] Hex Numbers
+  - [ ] Binary Values
+  - [ ] Filtering for Bit Fields
+  - [ ] Filtering with Ambiguous Name Resolution (ANR)
+- [ ] LDAP Search Filter Validator
+  - [ ] No quotation marks Comparative strings do NOT appear in quotation marks. A filter for the displayName 'Philipp Foeckeler' would read as follows: (displayName=Philipp Foeckeler)
+  - [ ] correct parentheses
+  - [ ] you can't use wildcards in LDAP filters for attributes containing LDAP distinguished names (attributes with DN-string syntax / ADSI attribute data type ADSTYPE_DN_STRING = 1). The same applies for ADS: Filters in which DN attributes are searched with wildcards do not work. the following filter won't work!
+        (distinguishedName=\*,ou=Sydney,dc=cerrotorre,dc=org)
 
 ## Inspired By:
 
@@ -79,3 +90,4 @@ for full API documentation look at [API Website](https://saostad.github.io/ldap-
 - [knex.js](http://knexjs.org/)
 - [ldap.js](http://ldapjs.org/filters.html)
 - [Adldap2](https://github.com/Adldap2/Adldap2)
+- [ldapexplorer](http://www.ldapexplorer.com/en/manual/109010000-ldap-filter-syntax.htm)
