@@ -90,4 +90,7 @@ for full API documentation look at [API Website](https://saostad.github.io/ldap-
 - [knex.js](http://knexjs.org/)
 - [ldap.js](http://ldapjs.org/filters.html)
 - [Adldap2](https://github.com/Adldap2/Adldap2)
+
+### Useful Resources
+
 - [ldapexplorer](http://www.ldapexplorer.com/en/manual/109010000-ldap-filter-syntax.htm)
