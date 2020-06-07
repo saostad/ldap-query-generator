@@ -125,7 +125,7 @@
 					<h2>TODO</h2>
 				</a>
 				<ul>
-					<li><input disabled="" type="checkbox"> Search Filters <a href="https://tools.ietf.org/html/rfc4515">RFC4515</a><ul>
+					<li><input disabled="" type="checkbox"> LDAP Search Filters <a href="https://tools.ietf.org/html/rfc4515">RFC4515</a><ul>
 							<li><input checked="" disabled="" type="checkbox"> where</li>
 							<li><input checked="" disabled="" type="checkbox"> whereAnd</li>
 							<li><input checked="" disabled="" type="checkbox"> whereOr</li>
@@ -133,9 +133,21 @@
 							<li><input checked="" disabled="" type="checkbox"> select</li>
 							<li><input checked="" disabled="" type="checkbox"> toString</li>
 							<li><input checked="" disabled="" type="checkbox"> whereRaw</li>
+							<li><input disabled="" type="checkbox"> Absence of attribute (!(attribute=<em>)) , e.g. (!proxyAddresses=</em>)</li>
+							<li><input disabled="" type="checkbox"> Filter boolean attributes the consideration of the upper/ lower case will be crucial. The use of TRUE or FALSE is absolutely necessary for filtering such booleans.</li>
+							<li><input disabled="" type="checkbox"> Special characters: characters ( ) &amp; | = ! &gt; &lt; ~ * / \ play a special role for the declaration of LDAP filters.</li>
+							<li><input disabled="" type="checkbox"> Hex Numbers</li>
+							<li><input disabled="" type="checkbox"> Binary Values</li>
+							<li><input disabled="" type="checkbox"> Filtering for Bit Fields</li>
+							<li><input disabled="" type="checkbox"> Filtering with Ambiguous Name Resolution (ANR)</li>
 						</ul>
 					</li>
-					<li><input disabled="" type="checkbox"> Validate ldap search filters</li>
+					<li><input disabled="" type="checkbox"> LDAP Search Filter Validator<ul>
+							<li><input disabled="" type="checkbox"> No quotation marks Comparative strings do NOT appear in quotation marks. A filter for the displayName &#39;Philipp Foeckeler&#39; would read as follows: (displayName=Philipp Foeckeler)</li>
+							<li><input disabled="" type="checkbox"> correct parentheses</li>
+							<li><input disabled="" type="checkbox"> you can&#39;t use wildcards in LDAP filters for attributes containing LDAP distinguished names (attributes with DN-string syntax / ADSI attribute data type ADSTYPE_DN_STRING = 1). The same applies for ADS: Filters in which DN attributes are searched with wildcards do not work. the following filter won&#39;t work!<pre><code><span class="hljs-params">(<span class="hljs-attr">distinguishedName</span>=\*,<span class="hljs-attr">ou</span>=Sydney,<span class="hljs-attr">dc</span>=cerrotorre,<span class="hljs-attr">dc</span>=org)</span></code></pre></li>
+						</ul>
+					</li>
 				</ul>
 				<a href="#inspired-by" id="inspired-by" style="color: inherit; text-decoration: none;">
 					<h2>Inspired By:</h2>
@@ -145,6 +157,12 @@
 					<li><a href="http://knexjs.org/">knex.js</a></li>
 					<li><a href="http://ldapjs.org/filters.html">ldap.js</a></li>
 					<li><a href="https://github.com/Adldap2/Adldap2">Adldap2</a></li>
+				</ul>
+				<a href="#useful-resources" id="useful-resources" style="color: inherit; text-decoration: none;">
+					<h3>Useful Resources</h3>
+				</a>
+				<ul>
+					<li><a href="http://www.ldapexplorer.com/en/manual/109010000-ldap-filter-syntax.htm">ldapexplorer</a></li>
 				</ul>
 			</div>
 		</div>
@@ -158,7 +176,7 @@
 						<a href="modules/_helpers_criteria_.html">&quot;helpers/criteria&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_helpers_tsstring_.html">&quot;helpers/ts<wbr>String&quot;</a>
+						<a href="modules/_helpers_tostring_.html">&quot;helpers/to<wbr>String&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/_index_.html">&quot;index&quot;</a>

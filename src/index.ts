@@ -1,5 +1,5 @@
 import type { Logger } from "fast-node-logger";
-import { toString } from "./helpers/tsString";
+import { toString } from "./helpers/toString";
 import { CriteriaActions } from "./helpers/criteria";
 
 export type Query<T = any> = {

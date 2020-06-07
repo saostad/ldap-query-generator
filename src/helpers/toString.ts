@@ -64,25 +64,25 @@ export function toString(query: Query): string {
 
   if (query.whereAnd.length > 0) {
     result.push(
-      `(&${query.whereAnd
-        .map((el) => `(${whereClausesToString(el)})`)
-        .join("")})`,
+      `${query.whereAnd
+        .map((el) => `(&(${whereClausesToString(el)}))`)
+        .join("")}`,
     );
   }
 
   if (query.whereOr.length > 0) {
     result.push(
-      `(|${query.whereOr
-        .map((el) => `(${whereClausesToString(el)})`)
-        .join("")})`,
+      `${query.whereOr
+        .map((el) => `(|(${whereClausesToString(el)}))`)
+        .join("")}`,
     );
   }
 
   if (query.whereNot.length > 0) {
     result.push(
-      `(!${query.whereNot
-        .map((el) => `(${whereClausesToString(el)})`)
-        .join("")})`,
+      `${query.whereNot
+        .map((el) => `(!(${whereClausesToString(el)}))`)
+        .join("")}`,
     );
   }
 
