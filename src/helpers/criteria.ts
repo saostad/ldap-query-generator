@@ -34,13 +34,12 @@ export function endWith({ field, criteria }: CriteriaActionsFnInput) {
 }
 
 /** @description The string representation of an ApproxMatch filter is constructed as follows:
- *
  * An open parenthesis The attribute description (potentially including attribute options) A tilde character An equal sign The value to compare (aka the assertion value) A close parenthesis.
  * @example
  * (givenName~=John)
  * /% to match entries with givenName values of either John or Jon.
- * @Note
- * Although it seems like a significant oversight or omission, the LDAP specifications do not make any provision for ApproxMatch matching Rules. A number of individual LDAP Server Implementations provide this capability anyway so that it may be possible to configure the approximate match behavior on a per-attribute basis, but the inconsistency of approximate matching capabilities between server implementations makes approximate matching something that is often avoided in LDAP-enabled applications.
+ * @note doesn't work with Microsoft Active Directory. Active Directory supports the approxMatch filter clause of [RFC2251] section 4.5.1. However, it is implemented identically to equalityMatch; for example, the filter is true if the values are equal. No approximation is performed. Filter clauses of the form "(X=Y)" and "(X~=Y)" can be freely substituted for each other.
+ * @note Although it seems like a significant oversight or omission, the LDAP specifications do not make any provision for ApproxMatch matching Rules. A number of individual LDAP Server Implementations provide this capability anyway so that it may be possible to configure the approximate match behavior on a per-attribute basis, but the inconsistency of approximate matching capabilities between server implementations makes approximate matching something that is often avoided in LDAP-enabled applications.
  */
 export function approxMatch({ field, criteria }: CriteriaActionsFnInput) {
   return `${field}~=${criteria}`;
