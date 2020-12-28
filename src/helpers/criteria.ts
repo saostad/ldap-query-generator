@@ -77,6 +77,7 @@ type ExtensibleFnInput = {
   criteria: string;
 };
 /**
+ * [More info](https://ldapwiki.com/wiki/ExtensibleMatch)
  * @example
  * (cn:1.2.3.4.5:=Fred Flintstone)
  * (sn:dn:2.4.6.8.10:=Barney Rubble)
@@ -89,7 +90,7 @@ export function extensible({
   matchingRuleId,
   criteria,
 }: ExtensibleFnInput) {
-  return `${field ?? ""}:${dn ? "dn" : ""}:${
+  return `${field ?? ""}${dn ? ":dn" : ""}:${
     matchingRuleId ?? ""
   }:=${criteria}`;
 }

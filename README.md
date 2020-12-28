@@ -41,6 +41,16 @@ const { query } = qGen
       matchingRuleId: "1.2.840.113556.1.4.1941",
     },
   })
+  .whereNot({
+    field: "userAccountControl",
+    action: "extensible",
+    criteria: "2",
+    extensibleConfig: {
+      dn: false,
+      ignoreField: false,
+      matchingRuleId: "1.2.840.113556.1.4.803",
+    },
+  })
   .whereRaw("&(cn=3)(dn=*)")
   .whereRaw("phone=*11");
 
@@ -50,16 +60,16 @@ console.log(query.toString());
 Output:
 
 ```
-(&(mobile=404*999*)(&(memberOf=admin*)(memberOf=*office)(badPwdCount<=2)(info~=my-info))(|(mail=*)(homePostalAddress=Georgia))(!(delivContLength>=6)(:dn:1.2.840.113556.1.4.1941:=joe))(&(cn=3)(dn=*))(phone=*11))
+(&(mobile=404*999*)(&(memberOf=admin*))(&(memberOf=*office))(&(badPwdCount<=2))(&(info~=my-info))(|(mail=*))(|(homePostalAddress=Georgia))(!(delivContLength>=6))(!(:dn:1.2.840.113556.1.4.1941:=joe))(!(userAccountControl:1.2.840.113556.1.4.803:=2))(&(cn=3)(dn=*))(phone=*11))
 ```
 
 ### Note:
 
-to auto-generate interface types from schema use [ldap-schema-ts-generator](https://www.npmjs.com/package/ldap-schema-ts-generator)
+to generate interfaces from ldap schema, use [ldap-schema-ts-generator](https://www.npmjs.com/package/ldap-schema-ts-generator)
 
 ### Api Documentations
 
-for full API documentation look at [API Website](https://saostad.github.io/ldap-query-generator/modules/_index_.html)
+API documentation [API Website](https://saostad.github.io/ldap-query-generator/modules/_index_.html)
 
 ## TODO
 
