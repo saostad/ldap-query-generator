@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for ldap-query-generator">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -40,8 +41,6 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -51,11 +50,6 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
 			<h1>ldap-query-generator</h1>
 		</div>
 	</div>
@@ -72,57 +66,59 @@
 				<a href="#as-easy-as" id="as-easy-as" style="color: inherit; text-decoration: none;">
 					<h2>AS Easy AS</h2>
 				</a>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { QueryGenerator } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;ldap-query-generator&quot;</span>;
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">QueryGenerator</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;ldap-query-generator&quot;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">/** User Fields */</span>
-<span class="hljs-keyword">interface</span> User {}
+<span style="color: #008000">/** User Fields */</span>
+<span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">User</span><span style="color: #000000"> {}</span>
 
-<span class="hljs-comment">/** You can use it with or without generic type */</span>
-<span class="hljs-keyword">const</span> qGen = <span class="hljs-keyword">new</span> QueryGenerator&lt;User&gt;();
-<span class="hljs-keyword">const</span> { query } = qGen
-  .select([<span class="hljs-string">&quot;USNIntersite&quot;</span>, <span class="hljs-string">&quot;aCSPolicyName&quot;</span>])
-  .where({ <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;mobile&quot;</span>, <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;substrings&quot;</span>, <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;404*999*&quot;</span> })
-  .whereAnd({ <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;memberOf&quot;</span>, <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;startWith&quot;</span>, <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;admin&quot;</span> })
-  .whereAnd({ <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;memberOf&quot;</span>, <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;endWith&quot;</span>, <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;office&quot;</span> })
-  .whereAnd({ <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;badPwdCount&quot;</span>, <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;lessOrEqual&quot;</span>, <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;2&quot;</span> })
-  .whereAnd({ <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;info&quot;</span>, <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;approxMatch&quot;</span>, <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;my-info&quot;</span> })
-  .whereOr({ <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;mail&quot;</span>, <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;present&quot;</span>, <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;*@domain.com&quot;</span> })
-  .whereOr({
-    <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;homePostalAddress&quot;</span>,
-    <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;substrings&quot;</span>,
-    <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;Georgia&quot;</span>,
-  })
-  .whereNot({
-    <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;delivContLength&quot;</span>,
-    <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;greaterOrEqual&quot;</span>,
-    <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;6&quot;</span>,
-  })
-  .whereNot({
-    <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;middleName&quot;</span>,
-    <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;extensible&quot;</span>,
-    <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;joe&quot;</span>,
-    <span class="hljs-attr">extensibleConfig</span>: {
-      <span class="hljs-attr">dn</span>: <span class="hljs-literal">true</span>,
-      <span class="hljs-attr">ignoreField</span>: <span class="hljs-literal">true</span>,
-      <span class="hljs-attr">matchingRuleId</span>: <span class="hljs-string">&quot;1.2.840.113556.1.4.1941&quot;</span>,
-    },
-  })
-  .whereNot({
-    <span class="hljs-attr">field</span>: <span class="hljs-string">&quot;userAccountControl&quot;</span>,
-    <span class="hljs-attr">action</span>: <span class="hljs-string">&quot;extensible&quot;</span>,
-    <span class="hljs-attr">criteria</span>: <span class="hljs-string">&quot;2&quot;</span>,
-    <span class="hljs-attr">extensibleConfig</span>: {
-      <span class="hljs-attr">dn</span>: <span class="hljs-literal">false</span>,
-      <span class="hljs-attr">ignoreField</span>: <span class="hljs-literal">false</span>,
-      <span class="hljs-attr">matchingRuleId</span>: <span class="hljs-string">&quot;1.2.840.113556.1.4.803&quot;</span>,
-    },
-  })
-  .whereRaw(<span class="hljs-string">&quot;&amp;(cn=3)(dn=*)&quot;</span>)
-  .whereRaw(<span class="hljs-string">&quot;phone=*11&quot;</span>);
+<span style="color: #008000">/** You can use it with or without generic type */</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">qGen</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">QueryGenerator</span><span style="color: #000000">&lt;</span><span style="color: #267F99">User</span><span style="color: #000000">&gt;();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">query</span><span style="color: #000000"> } = </span><span style="color: #001080">qGen</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">select</span><span style="color: #000000">([</span><span style="color: #A31515">&quot;USNIntersite&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;aCSPolicyName&quot;</span><span style="color: #000000">])</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">where</span><span style="color: #000000">({ </span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;mobile&quot;</span><span style="color: #000000">, </span><span style="color: #001080">action:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;substrings&quot;</span><span style="color: #000000">, </span><span style="color: #001080">criteria:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;404*999*&quot;</span><span style="color: #000000"> })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">whereAnd</span><span style="color: #000000">({ </span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;memberOf&quot;</span><span style="color: #000000">, </span><span style="color: #001080">action:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;startWith&quot;</span><span style="color: #000000">, </span><span style="color: #001080">criteria:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;admin&quot;</span><span style="color: #000000"> })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">whereAnd</span><span style="color: #000000">({ </span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;memberOf&quot;</span><span style="color: #000000">, </span><span style="color: #001080">action:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;endWith&quot;</span><span style="color: #000000">, </span><span style="color: #001080">criteria:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;office&quot;</span><span style="color: #000000"> })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">whereAnd</span><span style="color: #000000">({ </span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;badPwdCount&quot;</span><span style="color: #000000">, </span><span style="color: #001080">action:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;lessOrEqual&quot;</span><span style="color: #000000">, </span><span style="color: #001080">criteria:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;2&quot;</span><span style="color: #000000"> })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">whereAnd</span><span style="color: #000000">({ </span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;info&quot;</span><span style="color: #000000">, </span><span style="color: #001080">action:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;approxMatch&quot;</span><span style="color: #000000">, </span><span style="color: #001080">criteria:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;my-info&quot;</span><span style="color: #000000"> })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">whereOr</span><span style="color: #000000">({ </span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;mail&quot;</span><span style="color: #000000">, </span><span style="color: #001080">action:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;present&quot;</span><span style="color: #000000">, </span><span style="color: #001080">criteria:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;*@domain.com&quot;</span><span style="color: #000000"> })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">whereOr</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;homePostalAddress&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">action:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;substrings&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">criteria:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;Georgia&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">whereNot</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;delivContLength&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">action:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;greaterOrEqual&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">criteria:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;6&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">whereNot</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;middleName&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">action:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;extensible&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">criteria:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;joe&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">extensibleConfig:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">dn:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">ignoreField:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">matchingRuleId:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;1.2.840.113556.1.4.1941&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">  })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">whereNot</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">field:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;userAccountControl&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">action:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;extensible&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">criteria:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;2&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">extensibleConfig:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">dn:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">ignoreField:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">matchingRuleId:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;1.2.840.113556.1.4.803&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">  })</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">whereRaw</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;&amp;(cn=3)(dn=*)&quot;</span><span style="color: #000000">)</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">whereRaw</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;phone=*11&quot;</span><span style="color: #000000">);</span>
 
-<span class="hljs-built_in">console</span>.log(query.toString());</code></pre>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">query</span><span style="color: #000000">.</span><span style="color: #795E26">toString</span><span style="color: #000000">());</span>
+</code></pre>
 				<p>Output:</p>
-				<pre><code>(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">mobile=404*999*</span>)(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">memberOf=admin*</span>))(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">memberOf=*office</span>))(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">badPwdCount&lt;=2</span>))(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">info</span>~=my-info))(|(<span class="hljs-name">mail=*</span>))(|(<span class="hljs-name">homePostalAddress=Georgia</span>))(<span class="hljs-name">!</span>(<span class="hljs-name">delivContLength&gt;=6</span>))(<span class="hljs-name">!</span>(<span class="hljs-symbol">:dn:1.2.840.113556.1.4.1941:=joe</span>))(<span class="hljs-name">!</span>(<span class="hljs-name">userAccountControl:1.2.840.113556.1.4.803:=2</span>))(<span class="hljs-name"><span class="hljs-builtin-name">&amp;</span></span>(<span class="hljs-name">cn=3</span>)(<span class="hljs-name">dn=*</span>))(<span class="hljs-name">phone=*11</span>))</code></pre>
+				<pre><code><span style="color: #000000">(&amp;(</span><span style="color: #001080">mobile</span><span style="color: #000000">=</span><span style="color: #098658">404</span><span style="color: #000000">*</span><span style="color: #098658">999</span><span style="color: #000000">*)(&amp;(</span><span style="color: #001080">memberOf</span><span style="color: #000000">=</span><span style="color: #001080">admin</span><span style="color: #000000">*))(&amp;(</span><span style="color: #001080">memberOf</span><span style="color: #000000">=*</span><span style="color: #001080">office</span><span style="color: #000000">))(&amp;(</span><span style="color: #001080">badPwdCount</span><span style="color: #000000">&lt;=</span><span style="color: #098658">2</span><span style="color: #000000">))(&amp;(</span><span style="color: #001080">info</span><span style="color: #000000">~=</span><span style="color: #001080">my</span><span style="color: #000000">-</span><span style="color: #001080">info</span><span style="color: #000000">))(|(</span><span style="color: #001080">mail</span><span style="color: #000000">=*))(|(</span><span style="color: #001080">homePostalAddress</span><span style="color: #000000">=</span><span style="color: #001080">Georgia</span><span style="color: #000000">))(!(</span><span style="color: #001080">delivContLength</span><span style="color: #000000">&gt;=</span><span style="color: #098658">6</span><span style="color: #000000">))(!(:</span><span style="color: #001080">dn</span><span style="color: #000000">:</span><span style="color: #098658">1.2</span><span style="color: #000000">.</span><span style="color: #098658">840.113556</span><span style="color: #000000">.</span><span style="color: #098658">1.4</span><span style="color: #000000">.</span><span style="color: #098658">1941</span><span style="color: #000000">:=</span><span style="color: #001080">joe</span><span style="color: #000000">))(!(</span><span style="color: #001080">userAccountControl</span><span style="color: #000000">:</span><span style="color: #098658">1.2</span><span style="color: #000000">.</span><span style="color: #098658">840.113556</span><span style="color: #000000">.</span><span style="color: #098658">1.4</span><span style="color: #000000">.</span><span style="color: #098658">803</span><span style="color: #000000">:=</span><span style="color: #098658">2</span><span style="color: #000000">))(&amp;(</span><span style="color: #001080">cn</span><span style="color: #000000">=</span><span style="color: #098658">3</span><span style="color: #000000">)(</span><span style="color: #001080">dn</span><span style="color: #000000">=*))(</span><span style="color: #001080">phone</span><span style="color: #000000">=*</span><span style="color: #098658">11</span><span style="color: #000000">))</span>
+</code></pre>
 				<a href="#note" id="note" style="color: inherit; text-decoration: none;">
 					<h3>Note:</h3>
 				</a>
@@ -155,7 +151,8 @@
 					<li><input disabled="" type="checkbox"> LDAP Search Filter Validator<ul>
 							<li><input disabled="" type="checkbox"> No quotation marks Comparative strings do NOT appear in quotation marks. A filter for the displayName &#39;Philipp Foeckeler&#39; would read as follows: (displayName=Philipp Foeckeler)</li>
 							<li><input disabled="" type="checkbox"> correct parentheses</li>
-							<li><input disabled="" type="checkbox"> you can&#39;t use wildcards in LDAP filters for attributes containing LDAP distinguished names (attributes with DN-string syntax / ADSI attribute data type ADSTYPE_DN_STRING = 1). The same applies for ADS: Filters in which DN attributes are searched with wildcards do not work. the following filter won&#39;t work!<pre><code><span class="hljs-params">(<span class="hljs-attr">distinguishedName</span>=\*,<span class="hljs-attr">ou</span>=Sydney,<span class="hljs-attr">dc</span>=cerrotorre,<span class="hljs-attr">dc</span>=org)</span></code></pre>
+							<li><input disabled="" type="checkbox"> you can&#39;t use wildcards in LDAP filters for attributes containing LDAP distinguished names (attributes with DN-string syntax / ADSI attribute data type ADSTYPE_DN_STRING = 1). The same applies for ADS: Filters in which DN attributes are searched with wildcards do not work. the following filter won&#39;t work!<pre><code><span style="color: #000000">(</span><span style="color: #001080">distinguishedName</span><span style="color: #000000">=\*,</span><span style="color: #001080">ou</span><span style="color: #000000">=</span><span style="color: #001080">Sydney</span><span style="color: #000000">,</span><span style="color: #001080">dc</span><span style="color: #000000">=</span><span style="color: #001080">cerrotorre</span><span style="color: #000000">,</span><span style="color: #001080">dc</span><span style="color: #000000">=</span><span style="color: #001080">org</span><span style="color: #000000">)</span>
+</code></pre>
 							</li>
 						</ul>
 					</li>
@@ -180,28 +177,22 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
-					</li>
-					<li class="label tsd-is-external">
-						<span>Internals</span>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_index_.html">&quot;index&quot;</a>
-					</li>
-					<li class="label tsd-is-external">
-						<span>Externals</span>
-					</li>
-					<li class=" tsd-kind-module tsd-is-external">
-						<a href="modules/_helpers_criteria_.html">&quot;helpers/criteria&quot;</a>
-					</li>
-					<li class=" tsd-kind-module tsd-is-external">
-						<a href="modules/_helpers_tostring_.html">&quot;helpers/to<wbr>String&quot;</a>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/querygenerator.html" class="tsd-kind-icon">Query<wbr>Generator</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#query" class="tsd-kind-icon">Query</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#whereinput" class="tsd-kind-icon">Where<wbr>Input</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -212,11 +203,11 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 			</ul>
 		</div>
 	</div>
