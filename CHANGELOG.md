@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.8.3](https://github.com/saostad/ldap-query-generator/compare/v0.8.2...v0.8.3)
+
+> 2 March 2021
+
+- pkg: updated [`6203eab`](https://github.com/saostad/ldap-query-generator/commit/6203eab71b5142da579a6f7fa9b0b872b088e4f9)
+- doc: change log [`256ffdb`](https://github.com/saostad/ldap-query-generator/commit/256ffdb0c915b43a2b30c3d1a4d7fe44b9d033e2)
+
 #### [v0.8.2](https://github.com/saostad/ldap-query-generator/compare/v0.8.1...v0.8.2)
 
 > 28 December 2020
