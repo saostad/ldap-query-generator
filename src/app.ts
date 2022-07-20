@@ -6,7 +6,6 @@ import { QueryGenerator } from "./index";
 export async function main() {
   const logger = await createLogger({
     level: "trace",
-    prettyPrint: { colorize: true, translateTime: " yyyy-mm-dd HH:MM:ss" },
   });
 
   // const qGen = new QueryGenerator({ logger });
@@ -24,7 +23,7 @@ export async function main() {
 
   // const queryString = query.toString();
 
-  // // validation 
+  // // validation
   // (function queryValidate(str: string) {
   //   let result = "";
   //   /* Wrap the input in parens if it was not already */
@@ -36,9 +35,6 @@ export async function main() {
   //   console.log(`File: app.ts,`, `Line: 34 => `, result)
 
   // })(queryString)
-
-
-
 
   const qGen2 = new QueryGenerator({ logger });
   const { query } = qGen2
