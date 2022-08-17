@@ -69,7 +69,7 @@ to generate interfaces from ldap schema, use [ldap-schema-ts-generator](https://
 
 ### Api Documentations
 
-API documentation [API Website](https://saostad.github.io/ldap-query-generator/modules/_index_.html)
+API documentation [API Website](https://saostad.github.io/ldap-query-generator/)
 
 ## TODO
 
